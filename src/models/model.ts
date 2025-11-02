@@ -80,25 +80,18 @@ const ProductSchema = new mongoose.Schema<Product>({
     type: Number, 
     required: true,
     min: 0,
-    set: (v: number) => Math.round(v * 100) // Store in paise/cents
+    
   },
-  category: { 
-    type: String, 
+  // Allow flexible category values to match existing DB entries such as "Premium".
+  category: {
+    type: String,
     required: true,
-    enum: ['electronics', 'clothing', 'books', 'home', 'other']
+    
   },
   featured: { 
-    type: Boolean, 
-    default: false 
-  },
-  isActive: {
     type: Boolean,
-    default: true
-  },
-  sku: {
-    type: String,
-    unique: true,
-    sparse: true
+    default: false,
+    
   }
 }, { timestamps: true });
 

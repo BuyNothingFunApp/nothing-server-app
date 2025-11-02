@@ -103,7 +103,10 @@ export const OrderConfirmSchema = z.object({
     .min(1, "Product ID is required")
     .regex(/^[a-f0-9]{24}$/, "Invalid product ID format"), // Assuming MongoDB ObjectId
     
-  paymentDetails: PaymentDetailsSchema
+  paymentDetails: PaymentDetailsSchema,
+
+  amount: z.number()
+    .min(0, "Amount must be a positive number"),
 });
 
 export const ContactSchema = z.object({

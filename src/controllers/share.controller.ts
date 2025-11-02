@@ -3,6 +3,7 @@ import { ContactSchema, ShareSchema } from '../schema';
 import { OrderModel } from '../models/model';
 import { ApiResponse } from '../utils/apiResponse';
 import { logger } from '../utils/logger';
+import { sendContactEmail } from '../utils/emailService';
 
 export class ShareController {
 
@@ -18,7 +19,7 @@ export class ShareController {
         const { orderNumber, platform } = result.data;
 
         try {
-            const order = await OrderModel.findOne({ orderNumber });
+            const order = await OrderModel.findOne({ orderId: orderNumber });
             if (!order) {
                 new ApiResponse(res).error('Order not found' );
                 return;
@@ -36,7 +37,7 @@ export class ShareController {
         }
     };
 
-    handleContact(req: Request, res: Response) {
+    async handleContact(req: Request, res: Response) {
 
         const result = ContactSchema.safeParse(req.body);
         if (!result.success) {
@@ -45,6 +46,7 @@ export class ShareController {
         }
         try {
             const { message, customerEmail, customerName } = result.data;
+            await sendContactEmail(customerEmail, customerName, message);
             logger.info(`Message Recieved from ${customerName} with email ${customerEmail}. Message Body: ${message}`);
             new ApiResponse(res).success('Message Sent!')
         }

@@ -108,3 +108,36 @@ export async function sendConfirmationEmail(
     throw error;
   }
 }
+
+export async function sendContactEmail(
+  customerEmail: string,
+  customerName: string,
+  message: string
+): Promise<void> {
+  const subject = `Contact message from ${customerName}`;
+  const text = [
+    `Name: ${customerName}`,
+    `Email: ${customerEmail}`,
+    '',
+    'Message:',
+    message,
+    '',
+    `Received at: ${new Date().toISOString()}`
+  ].join('\n');
+
+  const mailOptions = {
+    from: process.env.SMTP_FROM || process.env.SMTP_USER || "noreply@buynothing.com",
+    to: process.env.SUPPORT_EMAIL || process.env.SMTP_USER || process.env.EMAIL_TO,
+    subject,
+    text,
+    replyTo: customerEmail,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    logger.info(`Contact email sent from ${customerName} <${customerEmail}> to ${mailOptions.to}`);
+  } catch (err) {
+    logger.error('Failed to send contact email', err);
+    throw err;
+  }
+}

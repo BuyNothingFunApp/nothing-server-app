@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Explicitly allow your frontend origin
+    origin: 'http://10.176.124.56:5173', // Explicitly allow your frontend origin
     credentials: true // Required when using credentials: "include" in fetch
 
 }));

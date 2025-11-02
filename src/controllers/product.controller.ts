@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { ApiResponse } from '../utils/apiResponse';
 import { logger } from '../utils/logger';
 import { ProductModel } from './../models/model';
@@ -13,12 +14,15 @@ export class ProductController {
     async getProduct(req: Request, res: Response) {
         try {
             const { featured } = req.query;
+            console.log('Featured query param:', featured);
 
             let query : any= {};
             if (featured) {
                 query.featured = featured === 'true';
             }
+            
             const products = await ProductModel.find(query);
+            console.log('Fetched products:', products);
             new ApiResponse(res).success('Products fetched successfully', products);
         } catch (error) {
             logger.error('Error fetching products:', error);
