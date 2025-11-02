@@ -13,6 +13,7 @@ Comprehensive backend for a lightweight e-commerce-like server providing product
 - Environment variables
 - Running the app (development & production)
 - Available scripts
+- Deployment
 - API reference (endpoints)
 - Logging & error handling
 - Testing
@@ -110,13 +111,57 @@ node dist/start-server.js  # or run your compiled entrypoint
 
 Taken from `package.json`:
 
-- `npm run start` — development server with ts-node-dev
+- `npm run dev` — development server with ts-node-dev (watch mode)
+- `npm run start` — start the production server
 - `npm run build` — compile TypeScript using `tsc`
 - `npm run lint` — run ESLint over `.ts` files
 - `npm run lint:fix` — run ESLint and auto-fix
 - `npm test` — placeholder (no tests configured)
 
 If you add tests, update `test` script accordingly.
+
+## Deployment
+
+This project is configured for deployment on Vercel. To deploy:
+
+1. Push your code to GitHub
+2. Visit [Vercel](https://vercel.com) and create a new project
+3. Import your GitHub repository
+4. Configure the following environment variables in Vercel's project settings:
+   - `MONGO_URI`
+   - `DB_PASSWORD`
+   - `RAZORPAY_KEY_ID`
+   - `RAZORPAY_KEY_SECRET`
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_USER` (or `EMAIL_USER`)
+   - `SMTP_PASSWORD` (or `EMAIL_PASSWORD`)
+   - `SMTP_FROM` (or `EMAIL_FROM`)
+   - `SUPPORT_EMAIL`
+   - `BASE_URL` (set to your Vercel deployment URL)
+   
+5. Deploy! Vercel will automatically:
+   - Install dependencies
+   - Run `npm run build` to compile TypeScript
+   - Start the server using `npm start`
+
+The project includes a `vercel.json` configuration that handles:
+- Build settings
+- Route configuration
+- Environment setup
+
+To deploy from your terminal using the Vercel CLI:
+
+```bash
+npm i -g vercel
+vercel
+```
+
+To deploy to production:
+
+```bash
+vercel --prod
+```
 
 ## API reference
 
