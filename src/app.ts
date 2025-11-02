@@ -12,10 +12,12 @@ dotenv.config();
 
 const app = express();
 
+const FW_PORT = process.env.FRONTEND_PORT || 5173;
+const FW_HOST = process.env.FRONTEND_HOST || 'localhost';
+const allowedOrigins = [`http://${FW_HOST}:${FW_PORT}`];
 app.use(cors({
-    origin: 'http://10.176.124.56:5173', // Explicitly allow your frontend origin
-    credentials: true // Required when using credentials: "include" in fetch
-
+    origin: allowedOrigins,
+    credentials: true
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
