@@ -88,7 +88,7 @@ Create a `.env` file at the project root (see `.env.example` if you create one) 
 - `SMTP_FROM` or `EMAIL_FROM` — Default from address for outgoing emails
 - `SUPPORT_EMAIL` — Support address for inbound notifications
 
-Note: The code references these environment variables in `src/` files (for example, `src/app.ts`, `src/start-server.ts`, `src/controllers/checkout.controller.ts`, and `src/utils/emailService.ts`).
+Note: The code references these environment variables in `src/` files (for example, `src/app.ts`, `src/server.ts`, `src/controllers/checkout.controller.ts`, and `src/utils/emailService.ts`).
 
 ## Running the app
 
@@ -98,13 +98,13 @@ Development (uses ts-node-dev):
 npm run start
 ```
 
-This runs `ts-node-dev --respawn --transpile-only src/start-server.ts` and will restart on file changes.
+This runs `ts-node-dev --respawn --transpile-only src/server.ts` and will restart on file changes.
 
 Production build (compile then run):
 
 ```bash
 npm run build
-node dist/start-server.js  # or run your compiled entrypoint
+node dist/server.js  # or run your compiled entrypoint
 ```
 
 ## Available npm scripts
